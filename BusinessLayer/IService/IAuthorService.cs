@@ -11,5 +11,6 @@ namespace BusinessLayer.IService
         public Task<IEnumerable<Author>> GetAllAsync();
         public Task<Author> GetByAuthorIdAsync(Guid id);
         public bool Delete(Author article);
+        public int CountOfArticle(Guid id);
     }
 }

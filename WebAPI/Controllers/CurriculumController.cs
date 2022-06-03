@@ -22,7 +22,8 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetAllCurriculums")]
+        [HttpGet]
+        [Route("GetAllCurriculums")]
         public async Task<ActionResult<IEnumerable<CurriculumReadDto>>> GetAllCurriculums()
         {
             var allItems = await _curriculumService.GetAllAsync();
@@ -40,7 +41,8 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        [HttpPost(Name = "CreateCurriculum")]
+        [HttpPost]
+        [Route("CreateCurriculum")]
         public async Task<ActionResult<CurriculumReadDto>> CreateCurriculum(CurriculumCreateDto curriculumCreateDto)
         {
             var item = _mapper.Map<Curriculum>(curriculumCreateDto);

@@ -139,6 +139,7 @@ namespace WebAPI.Controllers
             return Ok(new Response { Status = "Success", Message = "Admin created successfully!" });
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpGet]
         [Route("getallemployeeforadmin")]
         public async Task<ActionResult<IEnumerable<ApplicationUserReadDto>>> GetAllEmployeeForAdmin(Guid id)
