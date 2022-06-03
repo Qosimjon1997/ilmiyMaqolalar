@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class AuthorRepo : ICreate<Author>, IRead<Author>, IReadRange<Author>, IDelete<Author>
+    public class AuthorRepo : ICreate<Author>, IRead<Author>, IReadRange<Author>, IDelete<Author>, ICount
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -17,6 +17,12 @@ namespace DataLayer.Repositories
         {
             _dbContext = dbContext;
         }
+
+        public int Count(Guid id)
+        {
+            return _dbContext.SubAuthors.Where(x => x.AuthorId == id).Count();
+        }
+
         public async Task<bool> CreateAsync(Author entity)
         {
             await _dbContext.Authors.AddAsync(entity);

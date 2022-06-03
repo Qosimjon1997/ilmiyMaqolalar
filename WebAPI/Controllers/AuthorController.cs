@@ -2,8 +2,6 @@
 using BusinessLayer.IService;
 using DataLayer.Dtos.AuthorDtos;
 using DataLayer.Models;
-using DataLayer.Models.Auth;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,15 +22,14 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = UserRoles.Admin)]
-        [HttpGet(Name = "GetAllAuthors")]
+        [HttpGet]
+        [Route("GetAllAuthors")]
         public async Task<ActionResult<IEnumerable<AuthorReadDto>>> GetAllAuthors()
         {
             var allItems = await _authorService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<AuthorReadDto>>(allItems));
         }
 
-        [Authorize(Roles = UserRoles.Manager)]
         [HttpGet("{id}", Name = "GetByAuthorId")]
         public async Task<ActionResult<AuthorReadDto>> GetByAuthorId(Guid id)
         {
@@ -44,7 +41,15 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        [HttpPost(Name = "CreateAuthor")]
+        [HttpGet]
+        [Route("CountOfArticle")]
+        public ActionResult<int> CountOfArticle(Guid id)
+        {
+            return Ok(_authorService.CountOfArticle(id));
+        }
+
+        [HttpPost]
+        [Route("CreateAuthor")]
         public async Task<ActionResult<AuthorReadDto>> CreateAuthor(AuthorCreateDto entity)
         {
             var item = _mapper.Map<Author>(entity);

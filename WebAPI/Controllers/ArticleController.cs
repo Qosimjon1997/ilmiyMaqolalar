@@ -22,7 +22,8 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetAllArticles")]
+        [HttpGet]
+        [Route("GetAllArticles")]
         public async Task<ActionResult<IEnumerable<ArticleReadDto>>> GetAllArticles()
         {
             var allItems = await _articleService.GetAllAsync();
@@ -40,7 +41,8 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        [HttpPost(Name = "CreateArticle")]
+        [HttpPost]
+        [Route("CreateArticle")]
         public async Task<ActionResult<ArticleReadDto>> CreateArticle(ArticleCreateDto entity)
         {
             var item = _mapper.Map<Article>(entity);

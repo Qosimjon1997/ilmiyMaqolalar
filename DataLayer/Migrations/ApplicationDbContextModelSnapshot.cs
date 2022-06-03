@@ -129,9 +129,6 @@ namespace DataLayer.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("text");
-
                     b.Property<string>("Secondname")
                         .HasColumnType("text");
 

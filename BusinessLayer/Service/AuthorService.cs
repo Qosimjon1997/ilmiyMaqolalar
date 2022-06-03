@@ -13,14 +13,23 @@ namespace BusinessLayer.Service
         private readonly IDelete<Author> _delete;
         private readonly IRead<Author> _read;
         private readonly IReadRange<Author> _readRange;
+        private readonly ICount _count;
 
-        public AuthorService(ICreate<Author> create, IDelete<Author> delete, IRead<Author> read, IReadRange<Author> readRange)
+        public AuthorService(ICreate<Author> create, IDelete<Author> delete, IRead<Author> read, IReadRange<Author> readRange, ICount count)
         {
             _create = create;
             _delete = delete;
             _read = read;
             _readRange = readRange;
+            _count = count;
         }
+
+        public int CountOfArticle(Guid id)
+        {
+            var v = _count.Count(id);
+            return v;
+        }
+
         public async Task<bool> CreateAsync(Author author)
         {
             if (author == null)

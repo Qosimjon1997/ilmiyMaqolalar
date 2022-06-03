@@ -32,6 +32,7 @@ namespace Core.Extensions
             services.AddTransient<IReadRange<Article>, ArticleRepo>();
 
             services.AddTransient<ICreate<Author>, AuthorRepo>();
+            services.AddTransient<ICount, AuthorRepo>();
             services.AddTransient<IDelete<Author>, AuthorRepo>();
             services.AddTransient<IRead<Author>, AuthorRepo>();
             services.AddTransient<IReadRange<Author>, AuthorRepo>();
