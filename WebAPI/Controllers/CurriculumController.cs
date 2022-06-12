@@ -2,6 +2,8 @@
 using BusinessLayer.IService;
 using DataLayer.Dtos.CurriculumDtos;
 using DataLayer.Models;
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,19 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<CurriculumReadDto>>> GetAllCurriculums()
         {
             var allItems = await _curriculumService.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<CurriculumReadDto>>(allItems));
+            List<CurriculumReadDto> newList = new List<CurriculumReadDto>();
+
+            foreach(var item in allItems)
+            {
+                CurriculumReadDto newItem = new CurriculumReadDto()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Count = _curriculumService.CountArticleInCurriculum(item.Id)
+                };
+                newList.Add(newItem);
+            }
+            return Ok(newList);
         }
 
         [HttpGet("{id}",Name = "GetByCurriculumId")]
@@ -41,6 +55,7 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = UserRoles.Manager)]
         [HttpPost]
         [Route("CreateCurriculum")]
         public async Task<ActionResult<CurriculumReadDto>> CreateCurriculum(CurriculumCreateDto curriculumCreateDto)
@@ -55,6 +70,7 @@ namespace WebAPI.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = UserRoles.Manager)]
         [HttpDelete("{id}", Name = "DeleteCurriculum")]
         public ActionResult DeleteCurriculum(Guid id)
         {

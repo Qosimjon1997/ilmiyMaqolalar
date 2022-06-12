@@ -30,27 +30,24 @@ namespace Core.Extensions
             services.AddTransient<IDelete<Article>, ArticleRepo>();
             services.AddTransient<IRead<Article>, ArticleRepo>();
             services.AddTransient<IReadRange<Article>, ArticleRepo>();
+            services.AddTransient<IArticle, ArticleRepo>();
 
             services.AddTransient<ICreate<Author>, AuthorRepo>();
-            services.AddTransient<ICount, AuthorRepo>();
             services.AddTransient<IDelete<Author>, AuthorRepo>();
             services.AddTransient<IRead<Author>, AuthorRepo>();
             services.AddTransient<IReadRange<Author>, AuthorRepo>();
+            services.AddTransient<ICountOnly, AuthorRepo>();
 
             services.AddTransient<ICreate<Curriculum>, CurriculumRepo>();
             services.AddTransient<IReadRange<Curriculum>, CurriculumRepo>();
             services.AddTransient<IRead<Curriculum>, CurriculumRepo>();
             services.AddTransient<IDelete<Curriculum>, CurriculumRepo>();
+            services.AddTransient<ICountOnly, CurriculumRepo>();
 
-            services.AddTransient<ICreateRange<SubAuthor>, SubAuthorRepo>();
-            services.AddTransient<IDeleteRange<SubAuthor>, SubAuthorRepo>();
-            services.AddTransient<IRead<SubAuthor>, SubAuthorRepo>();
-            services.AddTransient<IReadSubAuthor, SubAuthorRepo>();
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<ICurriculumService, CurriculumService>();
-            services.AddScoped<ISubAuthorService, SubAuthorService>();
 
             // For Identity  
             services.AddIdentity<ApplicationUser, IdentityRole>()

@@ -11,6 +11,7 @@ namespace BusinessLayer.IService
         public bool Delete(Curriculum curriculum);
         public Task<IEnumerable<Curriculum>> GetAllAsync();
         public Task<Curriculum> GetByCurriculumIdAsync(Guid id);
+        public int CountArticleInCurriculum(Guid curriculumId);
 
     }
 }

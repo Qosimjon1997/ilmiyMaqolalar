@@ -12,9 +12,18 @@ namespace DataLayer.Models
         public string Topic { get; set; }
 
         //Muallif 
-        public IEnumerable<SubAuthor> SubAuthors { get; set; }
+        public Guid AuthorId { get; set; }
+        public Author Author { get; set; }
+
+        public string Anotation { get; set; }
+
+        public string FileName { get; set; }
+
+        public DateTime PublishedTime { get; set; }
         
         public Guid CurriculumId { get; set; }
         public Curriculum Curriculum { get; set; }
+
+        public string PhotoPath { get; set; }
     }
 }
