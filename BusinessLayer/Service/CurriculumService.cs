@@ -13,13 +13,20 @@ namespace BusinessLayer.Service
         private readonly IDelete<Curriculum> _delete;
         private readonly IRead<Curriculum> _read;
         private readonly IReadRange<Curriculum> _readRange;
+        private readonly ICountOnly _count;
 
-        public CurriculumService(ICreate<Curriculum> create, IDelete<Curriculum> delete, IRead<Curriculum> read, IReadRange<Curriculum> readRange)
+        public CurriculumService(ICreate<Curriculum> create, IDelete<Curriculum> delete, IRead<Curriculum> read, IReadRange<Curriculum> readRange, ICountOnly count)
         {
             _create = create;
             _delete = delete;
             _read = read;
             _readRange = readRange;
+            _count = count;
+        }
+
+        public int CountArticleInCurriculum(Guid curriculumId)
+        {
+            return _count.CountArticle(curriculumId);
         }
 
         public async Task<bool> CreateAsync(Curriculum curriculum)

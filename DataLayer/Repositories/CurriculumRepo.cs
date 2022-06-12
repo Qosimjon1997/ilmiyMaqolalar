@@ -9,13 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class CurriculumRepo : ICreate<Curriculum>, IDelete<Curriculum>, IRead<Curriculum>, IReadRange<Curriculum>
+    public class CurriculumRepo : ICreate<Curriculum>, IDelete<Curriculum>, IRead<Curriculum>, IReadRange<Curriculum>, ICountOnly
     {
         private readonly ApplicationDbContext _dbContext;
 
         public CurriculumRepo(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public int CountArticle(Guid id)
+        {
+            return _dbContext.Articles.Count(x => x.CurriculumId == id);
         }
 
         public async Task<bool> CreateAsync(Curriculum entity)

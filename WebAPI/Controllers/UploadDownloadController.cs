@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         [Route("upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {   
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            var uploads = Path.Combine("D:\\netCore\\ilmiyMaqolalar_Frontend\\src", "assets");
             if (!Directory.Exists(uploads))
             {
                 Directory.CreateDirectory(uploads);
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         [Route("download")]
         public async Task<IActionResult> Download([FromQuery] string file)
         {
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            var uploads = Path.Combine("D:\\netCore\\ilmiyMaqolalar_Frontend\\src", "assets");
             var filePath = Path.Combine(uploads, file);
             if (!System.IO.File.Exists(filePath))
             {
@@ -68,8 +68,7 @@ namespace WebAPI.Controllers
         public IActionResult Files()
         {
             var result = new List<string>();
-            var myfilepath = "";
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            var uploads = Path.Combine("D:\\netCore\\ilmiyMaqolalar_Frontend\\src", "assets");
             if (Directory.Exists(uploads))
             {
                 var provider = _hostingEnvironment.ContentRootFileProvider;
@@ -87,7 +86,7 @@ namespace WebAPI.Controllers
         public IActionResult FilePath(string myname)
         {
             var result = new List<string>();
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            var uploads = Path.Combine("D:\\netCore\\ilmiyMaqolalar_Frontend\\src", "assets");
             if (Directory.Exists(uploads))
             {
                 var provider = _hostingEnvironment.ContentRootFileProvider;

@@ -2,6 +2,8 @@
 using BusinessLayer.IService;
 using DataLayer.Dtos.AuthorDtos;
 using DataLayer.Models;
+using DataLayer.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,24 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<AuthorReadDto>>> GetAllAuthors()
         {
             var allItems = await _authorService.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<AuthorReadDto>>(allItems));
+            List<AuthorReadDto> newList = new List<AuthorReadDto>();
+
+            foreach (var item in allItems)
+            {
+                AuthorReadDto newItem = new AuthorReadDto()
+                {
+                    Id = item.Id,
+                    Degree = item.Degree,
+                    Email = item.Email,
+                    Firstname = item.Firstname,
+                    Passport = item.Passport,
+                    Phone = item.Phone,
+                    Secondname = item.Secondname,
+                    Count = _authorService.CountArticleInAuthor(item.Id)
+                };
+                newList.Add(newItem);
+            }
+            return Ok(newList);
         }
 
         [HttpGet("{id}", Name = "GetByAuthorId")]
@@ -41,13 +60,7 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [Route("CountOfArticle")]
-        public ActionResult<int> CountOfArticle(Guid id)
-        {
-            return Ok(_authorService.CountOfArticle(id));
-        }
-
+        [Authorize(Roles = UserRoles.Manager)]
         [HttpPost]
         [Route("CreateAuthor")]
         public async Task<ActionResult<AuthorReadDto>> CreateAuthor(AuthorCreateDto entity)
@@ -62,6 +75,7 @@ namespace WebAPI.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = UserRoles.Manager)]
         [HttpDelete("{id}", Name = "DeleteAuthor")]
         public ActionResult DeleteAuthor(Guid id)
         {

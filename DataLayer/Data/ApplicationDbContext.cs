@@ -19,7 +19,5 @@ namespace DataLayer.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Curriculum> Curriculums { get; set; }
-        public DbSet<SubAuthor> SubAuthors { get; set; }
-
     }
 }

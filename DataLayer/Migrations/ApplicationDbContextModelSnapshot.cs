@@ -25,13 +25,30 @@ namespace DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Anotation")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("CurriculumId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PublishedTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Topic")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("CurriculumId");
 
@@ -149,30 +166,6 @@ namespace DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Curriculums");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.SubAuthor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Who")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("SubAuthors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -307,32 +300,21 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Models.Article", b =>
                 {
+                    b.HasOne("DataLayer.Models.Author", "Author")
+                        .WithMany("Articles")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataLayer.Models.Curriculum", "Curriculum")
                         .WithMany("Articles")
                         .HasForeignKey("CurriculumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Curriculum");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.SubAuthor", b =>
-                {
-                    b.HasOne("DataLayer.Models.Article", "Article")
-                        .WithMany("SubAuthors")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataLayer.Models.Author", "Author")
-                        .WithMany("SubAuthors")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
                     b.Navigation("Author");
+
+                    b.Navigation("Curriculum");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -386,14 +368,9 @@ namespace DataLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataLayer.Models.Article", b =>
-                {
-                    b.Navigation("SubAuthors");
-                });
-
             modelBuilder.Entity("DataLayer.Models.Author", b =>
                 {
-                    b.Navigation("SubAuthors");
+                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("DataLayer.Models.Curriculum", b =>

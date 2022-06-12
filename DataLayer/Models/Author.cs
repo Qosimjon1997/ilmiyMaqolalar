@@ -14,7 +14,7 @@ namespace DataLayer.Models
         public string Passport { get; set; }
         public string Degree { get; set; }
 
-        public IEnumerable<SubAuthor> SubAuthors { get; set; }
+        public IEnumerable<Article> Articles { get; set; }
 
     }
 }

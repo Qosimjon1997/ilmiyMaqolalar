@@ -5,6 +5,7 @@ namespace DataLayer.Dtos.AuthorDtos
     public class AuthorReadDto
     {
         public Guid Id { get; set; }
+        public int Count { get; set; }
         public string Firstname { get; set; }
         public string Secondname { get; set; }
         public string Email { get; set; }
